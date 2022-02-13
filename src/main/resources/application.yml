@@ -7,7 +7,7 @@ spring:
     url: jdbc:mysql://101.43.148.140:3306/wiki?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
-    host: 127.0.0.1
+    host: 101.43.148.140
     port: 6379
     password: abc123456
 mybatis:
