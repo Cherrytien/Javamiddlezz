@@ -1,4 +1,4 @@
 FROM openjdk:8-jdk-alpine
 VOLUME /tmp
-COPY ./target/Javamiddle.jar Javamiddle.jar
-ENTRYPOINT ["java","-jar","/Javamiddle.jar", "&"]
+COPY ./target/javamiddle.jar javamiddle.jar
+ENTRYPOINT ["java","-jar","/javamiddle.jar", "&"]
