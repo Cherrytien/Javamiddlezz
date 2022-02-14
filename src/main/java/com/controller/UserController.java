@@ -11,19 +11,19 @@ import com.resp.UserLoginResp;
 import com.resp.UserQueryResp;
 import com.service.UserService;
 import com.util.IMOOCJSONResult;
+import com.util.RedisOperator;
 import com.util.SnowFlake;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.concurrent.TimeUnit;
+
 @Api(value = "用户相关", tags = {"用户相关的api接口"})
 @RestController
 @RequestMapping("/user")
@@ -38,7 +38,7 @@ public class UserController {
     private SnowFlake snowFlake;
 
     @Resource
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisOperator redisOperator;
 
     @ApiOperation(value = "用户列表", notes = "用户列表", httpMethod = "GET")
     @GetMapping("/list")
@@ -115,7 +115,7 @@ public class UserController {
         Long token = snowFlake.nextId();
         LOG.info("生成单点登录token：{}，并放入redis中", token);
         userLoginResp.setToken(token.toString());
-        redisTemplate.opsForValue().set(token.toString(), JSONObject.toJSONString(userLoginResp), 3600 * 24, TimeUnit.SECONDS);
+        redisOperator.set(token.toString(), JSONObject.toJSONString(userLoginResp), 3600 * 24);
         return IMOOCJSONResult.ok(userLoginResp);
 
     }
@@ -177,7 +177,7 @@ public class UserController {
     @ApiOperation(value = "用户退出登录", notes = "用户退出登录", httpMethod = "POST")
     @GetMapping("/logout/{token}")
     public IMOOCJSONResult logout(@PathVariable String token) {
-        redisTemplate.delete(token);
+        redisOperator.del(token);
         LOG.info("从redis中删除token: {}", token);
         return IMOOCJSONResult.ok();
     }
