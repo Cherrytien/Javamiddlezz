@@ -11,6 +11,8 @@ import com.resp.UserQueryResp;
 import com.service.UserService;
 import com.util.IMOOCJSONResult;
 import com.util.SnowFlake;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -20,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.concurrent.TimeUnit;
-
+@Api(value = "用户相关", tags = {"用户相关的api接口"})
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -36,26 +38,26 @@ public class UserController {
     @Resource
     private RedisTemplate redisTemplate;
 
-
+    @ApiOperation(value = "用户列表", notes = "用混列表", httpMethod = "POST")
     @GetMapping("/list")
     public IMOOCJSONResult list(UserQueryReq req){
         PageResp<UserQueryResp> list=userService.list(req);
         return IMOOCJSONResult.ok(list);
     }
-
+    @ApiOperation(value = "注册新用户", notes = "注册新用户", httpMethod = "POST")
     @PostMapping("/save")
     public IMOOCJSONResult save(@Valid @RequestBody UserSaveReq req) {
         req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
         userService.save(req);
         return IMOOCJSONResult.ok();
     }
-
+    @ApiOperation(value = "删除用户", notes = "删除用户", httpMethod = "POST")
     @DeleteMapping("/delete/{id}")
     public IMOOCJSONResult delete(@PathVariable Long id) {
         userService.delete(id);
         return IMOOCJSONResult.ok();
     }
-
+    @ApiOperation(value = "重置密码", notes = "重置密码", httpMethod = "POST")
     @PostMapping("/reset-password")
     public IMOOCJSONResult resetPassword(@Valid @RequestBody UserResetPasswordReq req) {
         req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
@@ -114,7 +116,7 @@ public class UserController {
 //
 //        return resp;
 //    }
-
+    @ApiOperation(value = "用户退出登录", notes = "用户退出登录", httpMethod = "POST")
     @GetMapping("/logout/{token}")
     public IMOOCJSONResult logout(@PathVariable String token) {
         redisTemplate.delete(token);
