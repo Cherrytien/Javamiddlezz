@@ -38,7 +38,7 @@ public class UserController {
     @Resource
     private RedisTemplate redisTemplate;
 
-    @ApiOperation(value = "用户列表", notes = "用混列表", httpMethod = "POST")
+    @ApiOperation(value = "用户列表", notes = "用户列表", httpMethod = "POST")
     @GetMapping("/list")
     public IMOOCJSONResult list(UserQueryReq req){
         PageResp<UserQueryResp> list=userService.list(req);
