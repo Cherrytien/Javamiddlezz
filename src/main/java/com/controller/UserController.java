@@ -2,7 +2,6 @@ package com.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.domain.User;
-import com.domain.UserExample;
 import com.req.UserLoginReq;
 import com.req.UserQueryReq;
 import com.req.UserResetPasswordReq;
@@ -19,14 +18,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 @Api(value = "用户相关", tags = {"用户相关的api接口"})
 @RestController
@@ -42,7 +38,7 @@ public class UserController {
     private SnowFlake snowFlake;
 
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     @ApiOperation(value = "用户列表", notes = "用户列表", httpMethod = "GET")
     @GetMapping("/list")
