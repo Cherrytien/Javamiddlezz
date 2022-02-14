@@ -79,8 +79,6 @@ public class UserController {
 //        }
 
         // 4. 实现注册
-        // TODO 生成用户token，存入redis会话
-        // TODO 同步购物车数据
         req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
         userService.save(req);
         return IMOOCJSONResult.ok();
@@ -124,7 +122,6 @@ public class UserController {
         redisTemplate.opsForValue().set(token.toString(), JSONObject.toJSONString(userLoginResp), 3600 * 24, TimeUnit.SECONDS);
         return IMOOCJSONResult.ok(userLoginResp);
 
-        // TODO 同步购物车数据
     }
 
 
