@@ -23,6 +23,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 @Api(value = "用户相关", tags = {"用户相关的api接口"})
 @RestController
@@ -137,6 +138,11 @@ public class UserController {
 //        resp.setContent(userLoginResp);
 //        return resp;
 //    }
+//    @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
+//    @PostMapping("/login")
+//    public IMOOCJSONResult login(@Valid @RequestBody UserLoginReq req) {
+//        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
+//        UserLoginResp userLoginResp = userService.login(req);
 
 
 //    @PostMapping("/login")
