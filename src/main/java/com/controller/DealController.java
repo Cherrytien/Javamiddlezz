@@ -25,7 +25,7 @@ public class DealController {
     // public Map<String, Object> book()
     //  public List<User> select(){
     // 查询列表的接口
-    @ApiOperation(value = "商品列表", notes = "查询商品列表", httpMethod = "POST")
+    @ApiOperation(value = "商品列表", notes = "查询商品列表", httpMethod = "GET")
     @GetMapping("/prod-api/deal")
     public IMOOCJSONResult select(){
         try{
