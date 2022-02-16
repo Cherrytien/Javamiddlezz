@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
-@Api(value = "商户相关", tags = {"用户相关的api接口"})
+@Api(value = "商户相关", tags = {"商户相关的api接口"})
 @RestController
 @RequestMapping("MerchantUser")
 public class MerchantUserController {
